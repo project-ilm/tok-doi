@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Verify a PIE signature — Tok DOI</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/javascript-opentimestamps@latest/opentimestamps.min.js" defer></script>
+</head><body>
+<div class="wrap">
+  <header><h1>Verify a signature</h1><div class="tag">Tok DOI</div></header>
+  <p>Paste a Tok DOI record (one JSON object). This recomputes the statement hash,
+     decodes the AyeSHA proof, checks the OpenTimestamps attestation, and confirms
+     the record endorses the canonical Proclamation.</p>
+  <div class="card">
+    <textarea id="rec" rows="10" placeholder='{"tok":"tok:pie:0001", ...}'></textarea>
+    <button id="go">Verify</button>
+    <div id="out" class="status"></div>
+  </div>
+  <footer>project-ilm/tok-doi · © 1993–2026 Abhishek Choudhary · model: Claude Opus 4.8</footer>
+</div>
+<script type="module">
+import { sha256Hex, otsVerifyHash } from './tok.js';
+import { Ayesha } from './ayesha.js';
+const $=id=>document.getElementById(id);
+$('go').onclick=async()=>{
+  const out=$('out'); out.className='status'; out.innerHTML='Verifying…';
+  let rec; try{ rec=JSON.parse($('rec').value); }catch{ out.className='status warn'; out.textContent='Not valid JSON.'; return; }
+  const lines=[];
+  try{
+    let base=null; for(const pp of ['registries/pie.json','../registries/pie.json']){try{const r=await fetch(pp);if(r.ok){base=await r.json();break;}}catch(_){}}
+    const rehash=await sha256Hex(rec.statement||'');
+    lines.push((rehash===rec.statement_sha256?'✓':'✗')+' statement hash matches record');
+    if(base) lines.push((rec.base_doi===base.base.doi?'✓':'✗')+' endorses canonical PIE DOI '+base.base.doi);
+    const otsBytes=await Ayesha.decode(rec.ots_ayesha);
+    lines.push('✓ AyeSHA decoded ('+otsBytes.length+' bytes of OTS proof)');
+    if(window.OpenTimestamps){
+      const res=await otsVerifyHash(rec.statement_sha256, otsBytes);
+      if(res && Object.keys(res).length){
+        const k=Object.keys(res)[0];
+        lines.push('✓ OpenTimestamps attested on '+k+' — '+new Date((res[k].timestamp||0)*1000).toISOString());
+      } else lines.push('◐ OTS proof present but attestation still pending (upgrade later)');
+    } else lines.push('◐ OTS library not loaded — hash & AyeSHA checks only');
+    out.className='status ok'; out.innerHTML=lines.join('<br>');
+  }catch(e){ out.className='status warn'; out.innerHTML=lines.concat('✗ '+e.message).join('<br>'); }
+};
+</script>
+</body></html>

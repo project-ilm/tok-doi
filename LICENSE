@@ -1,0 +1,23 @@
+Tok DOI — PIE signing campaign seed
+© 1993–2026 Abhishek Choudhary. All rights reserved.
+
+PER-CATEGORY LICENSING (Zistgah / Project ILM estate standard)
+
+  * SOFTWARE — docs/*.js, docs/*.html, scripts/*, .github/* :
+        GNU General Public License v3.0 or later (GPL-3.0-or-later)
+        https://www.gnu.org/licenses/gpl-3.0.txt
+  * CONTENT — README, MANIFESTO, and other prose :
+        Creative Commons Attribution-ShareAlike 4.0 (CC-BY-SA-4.0)
+        https://creativecommons.org/licenses/by-sa/4.0/legalcode
+  * METADATA & REGISTRY — registries/*, registry/** (records and schema) :
+        Creative Commons Zero 1.0 Universal (CC0-1.0)
+        https://creativecommons.org/publicdomain/zero/1.0/legalcode
+  * PATENTABLE METHODS — proprietary, all rights reserved (none asserted here).
+
+Attribution: Abhishek Choudhary (AyeAI), ORCID 0009-0002-0684-8320.
+
+Signatory-submitted content in the registry is dedicated to the public domain
+(CC0) so the registry remains freely verifiable and redistributable by anyone.
+
+MAINTAINER NOTE: to ship full legal codes in-tree, add a LICENSES/ directory
+(SPDX layout) with the GPL-3.0, CC-BY-SA-4.0, and CC0-1.0 texts.

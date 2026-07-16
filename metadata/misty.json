@@ -1,0 +1,19 @@
+{
+  "title": "Tok DOI — atomic provenance layer",
+  "version": "0.1-pie-campaign",
+  "upload_type": "software",
+  "language": "eng",
+  "access_right": "open",
+  "license": "gpl-3.0-or-later",
+  "description": "Tok DOI registers cryptographic proof rather than publishing scholarly artifacts. Any digital artifact reduces to SHA-256 -> OpenTimestamps -> AyeSHA encoding -> selected registry -> Tok DOI record, at arbitrary granularity. Browser-first, no backend; registries are public, append-only, and version-controlled; the raw .ots is never stored, only its AyeSHA encoding. This release is the seed sized for the Proclamation of Individual Equity (PIE) signatory campaign. Sibling to Misty DOI (the rich publication layer).",
+  "creators": [
+    {"name": "Choudhary, Abhishek", "affiliation": "AyeAI", "orcid": "0009-0002-0684-8320"}
+  ],
+  "keywords": ["provenance","OpenTimestamps","timestamp","atomic provenance","AyeSHA","registry","Tok DOI","token-level security","signatory campaign"],
+  "notes": "Seed release for the PIE signatory campaign. Independent of Misty DOI. AyeSHA codec is a documented placeholder behind a stable interface. Model of record: Claude Opus 4.8.",
+  "repository": "https://github.com/project-ilm/tok-doi",
+  "doi": null,
+  "related_identifiers": [
+    {"relation": "references", "identifier": "10.5281/zenodo.21397274", "resource_type": "publication-other"}
+  ]
+}

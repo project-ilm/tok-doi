@@ -1,0 +1,19 @@
+{
+  "title": "Parwana — attested authorization protocol for irreversible actions (v1)",
+  "version": "1.0",
+  "upload_type": "publication",
+  "publication_type": "technicalnote",
+  "language": "eng",
+  "access_right": "open",
+  "license": "cc-by-4.0",
+  "description": "Parwana v1 is a thin protocol for human authorization of irreversible actions (DOI minting, git push). The human authorizes with one command using a git-style short digest of the subject plus a reason; the intent (subject-digest, action, target, reason, actor, UTC) is recorded as an in-toto Statement v1 and OpenTimestamps-attested, so the authorization itself is non-repudiable. It reuses in-toto (envelope) and OpenTimestamps (notarisation); the only new element is the parwana/v1 predicate profile and the rule that the raw .ots is never stored, only its AyeSHA encoding. Motivated by the 'no donkey work for humans' contract: sufficient intent is a single command plus a short signed-off character string.",
+  "creators": [
+    {"name": "Choudhary, Abhishek", "affiliation": "AyeAI", "orcid": "0009-0002-0684-8320"}
+  ],
+  "keywords": ["authorization","attestation","in-toto","OpenTimestamps","provenance","intent","non-repudiation","supply chain","Parwana"],
+  "notes": "Predicate type https://project-ilm.org/attestations/parwana/v1. Reference implementation: attest/parwana.sh in project-ilm/tok-doi. Model of record: Claude Opus 4.8.",
+  "repository": "https://github.com/project-ilm/tok-doi",
+  "related_identifiers": [
+    {"relation": "isSupplementTo", "identifier": "10.5281/zenodo.21397274", "resource_type": "publication-other"}
+  ]
+}
