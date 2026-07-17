@@ -1,0 +1,12 @@
+{
+  "tok": "tok:general:PENDING",
+  "registry": "general",
+  "subject": {
+    "sha256": "2079b819b56b985b6d2597e2a359fa974fdb8ecc615a920deec97c720386abf1",
+    "kind": "artifact",
+    "bytes": 392
+  },
+  "ots_ayesha": "AYESHA1.AE9wZW5UaW1lc3RhbXBzAABQcm9vZgC_ieLohOiSlAEItFi-pQS7pXZJ7ZhawT02s2u8w_3aBZ0AdLFGWW7-a8XwEAlBzWGZ70d0MBmBO7cXgDUI__AIOffNsMli_qoI8CDXYqLGmvo5iN6N_5WBCJjZoskMvXVQPhvs_-84PjNX8AjwEGKid4PUz9dftjIdbYRyRaII8SD4CHYZ1o36tl5CzqPPspEYb5yO78M-xt76cyN_afrpUwjxBGpaPnLwCF_N5q_A0pSXAIPf4w0u-QyOLi1odHRwczovL2FsaWNlLmJ0Yy5jYWxlbmRhci5vcGVudGltZXN0YW1wcy5vcmf_8BCkxLMw0Pp9_URUgOrX7OG-CPEEalo-cvAIFtgt5Y1hTJQAg9_jDS75DI4jImh0dHBzOi8vYnRjLmNhbGVuZGFyLmNhdGFsbGF4eS5jb23wCNvBu8PA4w6oCPAQdYpZ5YdhCH_NdHbhNP-HhgjxIDTz1SXWwU2JvsQMmMufU3MZBoPpyMvn5tfI98ColOlHCPEEalo-cfAIYKzu3exbEvYAg9_jDS75DI4sK2h0dHBzOi8vYm9iLmJ0Yy5jYWxlbmRhci5vcGVudGltZXN0YW1wcy5vcmc.4df73908",
+  "registered_utc": "2026-07-17T14:39:21.930Z",
+  "model_of_record": "Claude Opus 4.8"
+}
