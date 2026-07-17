@@ -3,16 +3,15 @@
 
 See the master map at `zistgah/governance/CONTEXT.md`. This repo:
 
-- **Is** the complete Tok DOI atomic-provenance layer: register proof of any
-  artifact under any registry (general) at arbitrary granularity; PIE endorsement
-  is one registry (docs/sign-pie.html).
-- **Registrar:** `docs/index.html` (general); **signing:** `docs/sign-pie.html` (+ `tok.js`, `ayesha.js`) — hashes an
+- **Is** the atomic-provenance seed for the Proclamation of Individual Equity
+  (PIE, DOI 10.5281/zenodo.21397274) signatory campaign — the first, scoped slice of Tok DOI.
+- **Signing tool:** `docs/index.html` (+ `tok.js`, `ayesha.js`) — hashes an
   endorsement statement, timestamps it via OpenTimestamps in the browser, AyeSHA-
   encodes the proof, and hands back a registry record plus keyless submission links.
 - **Verify:** `docs/verify.html` and `scripts/verify.sh` — decode AyeSHA, verify
   the OTS proof, confirm it references the PIE base.
-- **Registries:** `registries/index.json` (catalog) → `general`, `pie`. Records
-  append-only under `registry/<id>/`. Collections curate sub-DOIs for Misty.
+- **Registry base:** `registries/pie.json`. **Records:** `registry/pie/signatures.jsonl`
+  (append-only), schema at `registry/pie/SCHEMA.json`.
 - **Ingest:** `scripts/ingest.sh` (Google-Sheet CSV → append; dry-run default).
 - **Naming:** Tok DOI ("Tok Doi" — token / timestamp / talk; atomic). Signature:
   «No Added Sugar.» Sibling: Misty DOI ("Mishti Doi"; rich publication layer).

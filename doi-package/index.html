@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sign the Proclamation of Individual Equity — Tok DOI</title>
+<link rel="stylesheet" href="style.css">
+<!-- OpenTimestamps browser bundle. If the global name differs in your pinned
+     version, adjust; the code checks window.OpenTimestamps. -->
+<script src="https://cdn.jsdelivr.net/npm/javascript-opentimestamps@latest/opentimestamps.min.js" defer></script>
+</head><body>
+<div class="wrap">
+  <header>
+    <h1>Sign the Proclamation of Individual Equity</h1>
+    <div class="tag">Tok DOI · atomic provenance</div>
+    <div class="sig">“No Added Sugar.”</div>
+  </header>
+
+  <div class="disclaimer">
+    <b>This is not an anti-institution campaign.</b> Signing places a
+    decentralised, cryptographically verifiable timestamp beside the canonical
+    Proclamation — an act of <b>preservation of individuality in the AGI era</b>,
+    not a petition, a demand, or opposition to any university, company, journal,
+    or government. Institutions are welcome to sign as institutions. Anonymity and
+    pseudonyms are permitted; no data beyond what you submit is collected.
+    Full intent: <a href="../MANIFESTO.md">MANIFESTO.md</a>.
+  </div>
+
+  <p>You are endorsing <strong>Proclamation of Individual Equity — Version 1.0</strong>,
+     DOI <a id="doilink" href="#">loading…</a>. Your endorsement statement is hashed
+     (SHA-256), timestamped via OpenTimestamps in your browser, AyeSHA-encoded, and
+     returned to you as a registry record you submit yourself — keyless.</p>
+
+  <div class="card">
+    <label>Name or handle (optional — leave blank for anonymous)</label>
+    <input id="signatory" placeholder="e.g. A. Choudhary, or a pseudonym">
+    <div class="row">
+      <div><label>Affiliation (optional)</label><input id="affiliation" placeholder="individual or institution"></div>
+      <div><label>Capacity</label>
+        <select id="capacity"><option value="individual">individual</option><option value="institution">institution</option></select></div>
+    </div>
+    <label>Artifact link (optional — your own stored copy; not the OTS)</label>
+    <input id="artifact_url" placeholder="https://…">
+    <button id="signBtn">Sign & timestamp</button>
+    <div id="status" class="status"></div>
+  </div>
+
+  <!-- manual OTS fallback -->
+  <div class="card" id="manualCard" style="display:none">
+    <b>Browser timestamping unavailable.</b> Stamp this hash yourself at
+    <a href="https://opentimestamps.org" target="_blank" rel="noopener">opentimestamps.org</a>
+    (drop a file containing exactly the statement below), then load the returned
+    <code>.ots</code>:
+    <pre id="manualHash"></pre>
+    <input type="file" id="otsFile" accept=".ots">
+  </div>
+
+  <div class="card" id="result" style="display:none">
+    <div class="status ok">✓ Record built. Submit it keyless-ly:</div>
+    <div class="row">
+      <button class="ghost" id="ghBtn">Commit via GitHub (click Commit on the next page)</button>
+      <button class="ghost" id="formBtn">Submit via Google Form</button>
+      <button class="ghost" id="dlBtn">Download record</button>
+    </div>
+    <small>The GitHub path writes one record file to <code>registry/pie/inbox/</code>;
+      the maintainer folds it into the append-only registry. Nothing is auto-pushed.</small>
+    <label>Your Tok DOI record</label>
+    <pre id="recJSON"></pre>
+  </div>
+
+  <footer>Project ILM · project-ilm/tok-doi · © 1993–2026 Abhishek Choudhary. All rights reserved. · model: Claude Opus 4.8</footer>
+</div>
+
+<script type="module">
+import { buildRecord, buildStatement, sha256Hex, otsStampHash, composeUrl, toJSONL } from './tok.js';
+import { Ayesha } from './ayesha.js';
+
+const CFG = {
+  owner:'project-ilm', repo:'tok-doi', branch:'main',
+  googleFormUrl:'',                 // ⚠ paste your published Google Form URL here
+  registryFile:'registries/pie.json'
+};
+let BASE=null, current=null;
+
+async function fetchBase(){
+  for(const p of ['registries/pie.json','../registries/pie.json']){
+    try{ const r=await fetch(p); if(r.ok) return await r.json(); }catch(_){}
+  }
+  throw new Error('base registry not found');
+}
+async function loadBase(){
+  BASE = await fetchBase();
+  const a=document.getElementById('doilink'); a.textContent=BASE.base.doi; a.href=BASE.base.doi_url;
+}
+loadBase().catch(()=>{ document.getElementById('doilink').textContent='(registry unavailable)'; });
+
+const $=id=>document.getElementById(id);
+function fields(){ return {
+  signatory:$('signatory').value.trim(), affiliation:$('affiliation').value.trim(),
+  capacity:$('capacity').value, artifact_url:$('artifact_url').value.trim(),
+  base_doi:BASE?.base?.doi, base_sha256:BASE?.base?.canonical_text_sha256 }; }
+
+function showResult(rec){
+  current=rec; $('recJSON').textContent=JSON.stringify(rec,null,2); $('result').style.display='block';
+  const path=`registry/pie/inbox/tok-pie-${rec.statement_sha256.slice(0,12)}.json`;
+  $('ghBtn').onclick=()=>window.open(composeUrl({...CFG, path, content:JSON.stringify(rec,null,2)}),'_blank');
+  $('formBtn').onclick=()=>{ if(!CFG.googleFormUrl){alert('Set CFG.googleFormUrl to your published form.');return;}
+    window.open(CFG.googleFormUrl,'_blank'); };
+  $('dlBtn').onclick=()=>{ const b=new Blob([toJSONL(rec)+'\n'],{type:'application/x-ndjson'});
+    const u=URL.createObjectURL(b); const a=document.createElement('a'); a.href=u;
+    a.download=`tok-pie-${rec.statement_sha256.slice(0,12)}.jsonl`; a.click(); URL.revokeObjectURL(u); };
+}
+
+$('signBtn').onclick=async()=>{
+  if(!BASE){alert('Registry base not loaded.');return;}
+  const btn=$('signBtn'), st=$('status'); btn.disabled=true; st.className='status'; st.textContent='Hashing…';
+  try{
+    if(!window.OpenTimestamps) throw new Error('no-ots-lib');
+    st.textContent='Timestamping via OpenTimestamps calendars…';
+    const rec=await buildRecord(fields());
+    st.className='status ok'; st.textContent='✓ Timestamped and AyeSHA-encoded.';
+    showResult(rec);
+  }catch(e){
+    if(String(e.message).includes('no-ots-lib') || String(e).includes('OpenTimestamps')){
+      // fallback: manual stamping
+      const f=fields(), signed_utc=new Date().toISOString();
+      const statement=buildStatement({...f, signed_utc});
+      const sha=await sha256Hex(statement);
+      $('manualCard').style.display='block';
+      $('manualHash').textContent=`statement (hash this file's exact contents):\n\n${statement}\n\nSHA-256: ${sha}`;
+      st.className='status warn'; st.textContent='Browser OTS unavailable — use the manual panel below.';
+      $('otsFile').onchange=async ev=>{
+        const buf=new Uint8Array(await ev.target.files[0].arrayBuffer());
+        const ots_ayesha=await Ayesha.encode(buf);
+        const rec={tok:'tok:pie:PENDING',registry:'pie',base_doi:f.base_doi,
+          signatory:f.signatory||'',affiliation:f.affiliation||'',capacity:f.capacity,
+          statement,statement_sha256:sha,ots_ayesha,signed_utc,model_of_record:'Claude Opus 4.8'};
+        if(f.artifact_url)rec.artifact_url=f.artifact_url; showResult(rec);
+      };
+    }else{ st.className='status warn'; st.textContent='Error: '+e.message; }
+  }finally{ btn.disabled=false; }
+};
+</script>
+</body></html>

@@ -1,142 +1,152 @@
 <!doctype html>
 <html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Sign the Proclamation of Individual Equity — Tok DOI</title>
+<title>Tok DOI — atomic provenance registrar</title>
 <link rel="stylesheet" href="style.css">
-<!-- OpenTimestamps browser bundle. If the global name differs in your pinned
-     version, adjust; the code checks window.OpenTimestamps. -->
 <script src="https://cdn.jsdelivr.net/npm/javascript-opentimestamps@latest/opentimestamps.min.js" defer></script>
 </head><body>
 <div class="wrap">
   <header>
-    <h1>Sign the Proclamation of Individual Equity</h1>
-    <div class="tag">Tok DOI · atomic provenance</div>
+    <h1>Tok DOI</h1>
+    <div class="tag">atomic provenance · register cryptographic proof of any artifact</div>
     <div class="sig">“No Added Sugar.”</div>
   </header>
 
-  <div class="disclaimer">
-    <b>This is not an anti-institution campaign.</b> Signing places a
-    decentralised, cryptographically verifiable timestamp beside the canonical
-    Proclamation — an act of <b>preservation of individuality in the AGI era</b>,
-    not a petition, a demand, or opposition to any university, company, journal,
-    or government. Institutions are welcome to sign as institutions. Anonymity and
-    pseudonyms are permitted; no data beyond what you submit is collected.
-    Full intent: <a href="../MANIFESTO.md">MANIFESTO.md</a>.
-  </div>
-
-  <p>You are endorsing <strong>Proclamation of Individual Equity — Version 1.0</strong>,
-     DOI <a id="doilink" href="#">loading…</a>. Your endorsement statement is hashed
-     (SHA-256), timestamped via OpenTimestamps in your browser, AyeSHA-encoded, and
-     returned to you as a registry record you submit yourself — keyless.</p>
+  <p>Any digital artifact — a byte, a token, a sentence, a message, a chat, an
+     image, a file — reduces to <strong>SHA-256 → OpenTimestamps → AyeSHA → registry</strong>.
+     The raw <code>.ots</code> is never stored, only its AyeSHA encoding. Registries are
+     public, append-only, and version-controlled. Each record is an atomic
+     <strong>sub-DOI</strong>; curated sets publish as one Zenodo DOI via
+     <a href="../collections/README.md">Misty</a>.</p>
 
   <div class="card">
-    <label>Name or handle (optional — leave blank for anonymous)</label>
-    <input id="signatory" placeholder="e.g. A. Choudhary, or a pseudonym">
-    <div class="row">
-      <div><label>Affiliation (optional)</label><input id="affiliation" placeholder="individual or institution"></div>
-      <div><label>Capacity</label>
-        <select id="capacity"><option value="individual">individual</option><option value="institution">institution</option></select></div>
+    <label>Registry</label>
+    <select id="registry"></select>
+    <div id="regnote"><small></small></div>
+
+    <div id="artifactForm">
+      <label>Artifact source</label>
+      <select id="source">
+        <option value="text">paste text</option>
+        <option value="file">upload file</option>
+        <option value="hash">paste SHA-256 directly</option>
+      </select>
+
+      <div id="src-text"><label>Text</label><textarea id="text" rows="4" placeholder="paste the exact bytes to register"></textarea></div>
+      <div id="src-file" style="display:none"><label>File</label><input type="file" id="file"></div>
+      <div id="src-hash" style="display:none"><label>SHA-256 (64 hex)</label><input id="hash" placeholder="a2fce8ee…"></div>
+
+      <div class="row">
+        <div><label>Kind / granularity</label>
+          <select id="kind">
+            <option>artifact</option><option>byte</option><option>char</option><option>token</option>
+            <option>word</option><option>sentence</option><option>message</option><option>chat</option>
+            <option>image</option><option>code</option><option>file</option>
+          </select></div>
+        <div><label>Name (optional)</label><input id="name" placeholder="label"></div>
+      </div>
+      <label>Artifact link (optional — where it's stored; not the OTS)</label>
+      <input id="artifact_url" placeholder="https://… / ipfs://…">
+      <button id="regBtn">Register &amp; timestamp</button>
+      <div id="status" class="status"></div>
     </div>
-    <label>Artifact link (optional — your own stored copy; not the OTS)</label>
-    <input id="artifact_url" placeholder="https://…">
-    <button id="signBtn">Sign & timestamp</button>
-    <div id="status" class="status"></div>
+
+    <div id="endorseNote" style="display:none">
+      <p>This is an <strong>endorsement</strong> registry. Use the dedicated page:
+      <a id="signLink" href="sign-pie.html">open the signing page →</a></p>
+    </div>
   </div>
 
-  <!-- manual OTS fallback -->
   <div class="card" id="manualCard" style="display:none">
-    <b>Browser timestamping unavailable.</b> Stamp this hash yourself at
-    <a href="https://opentimestamps.org" target="_blank" rel="noopener">opentimestamps.org</a>
-    (drop a file containing exactly the statement below), then load the returned
-    <code>.ots</code>:
+    <b>Browser timestamping unavailable.</b> Stamp this hash at
+    <a href="https://opentimestamps.org" target="_blank" rel="noopener">opentimestamps.org</a>,
+    then load the returned <code>.ots</code>:
     <pre id="manualHash"></pre>
     <input type="file" id="otsFile" accept=".ots">
   </div>
 
   <div class="card" id="result" style="display:none">
-    <div class="status ok">✓ Record built. Submit it keyless-ly:</div>
+    <div class="status ok">✓ Record built. Submit keyless-ly:</div>
     <div class="row">
-      <button class="ghost" id="ghBtn">Commit via GitHub (click Commit on the next page)</button>
-      <button class="ghost" id="formBtn">Submit via Google Form</button>
+      <button class="ghost" id="ghBtn">Commit via GitHub</button>
       <button class="ghost" id="dlBtn">Download record</button>
     </div>
-    <small>The GitHub path writes one record file to <code>registry/pie/inbox/</code>;
-      the maintainer folds it into the append-only registry. Nothing is auto-pushed.</small>
-    <label>Your Tok DOI record</label>
-    <pre id="recJSON"></pre>
+    <small>GitHub writes one record to <code>registry/&lt;id&gt;/inbox/</code>; the
+      maintainer folds it into the append-only registry. Nothing is auto-pushed.</small>
+    <label>Your Tok DOI record</label><pre id="recJSON"></pre>
   </div>
 
-  <footer>Project ILM · project-ilm/tok-doi · © 1993–2026 Abhishek Choudhary. All rights reserved. · model: Claude Opus 4.8</footer>
+  <footer>project-ilm/tok-doi · verify at <a href="verify.html">verify.html</a> ·
+    © 1993–2026 Abhishek Choudhary. All rights reserved. · model: Claude Opus 4.8</footer>
 </div>
 
 <script type="module">
-import { buildRecord, buildStatement, sha256Hex, otsStampHash, composeUrl, toJSONL } from './tok.js';
+import { sha256Hex, sha256HexBytes, buildArtifactRecord, otsStampHash, composeUrl, toJSONL } from './tok.js';
 import { Ayesha } from './ayesha.js';
-
-const CFG = {
-  owner:'project-ilm', repo:'tok-doi', branch:'main',
-  googleFormUrl:'',                 // ⚠ paste your published Google Form URL here
-  registryFile:'registries/pie.json'
-};
-let BASE=null, current=null;
-
-async function fetchBase(){
-  for(const p of ['registries/pie.json','../registries/pie.json']){
-    try{ const r=await fetch(p); if(r.ok) return await r.json(); }catch(_){}
-  }
-  throw new Error('base registry not found');
-}
-async function loadBase(){
-  BASE = await fetchBase();
-  const a=document.getElementById('doilink'); a.textContent=BASE.base.doi; a.href=BASE.base.doi_url;
-}
-loadBase().catch(()=>{ document.getElementById('doilink').textContent='(registry unavailable)'; });
-
+const CFG={owner:'project-ilm',repo:'tok-doi',branch:'main'};
 const $=id=>document.getElementById(id);
-function fields(){ return {
-  signatory:$('signatory').value.trim(), affiliation:$('affiliation').value.trim(),
-  capacity:$('capacity').value, artifact_url:$('artifact_url').value.trim(),
-  base_doi:BASE?.base?.doi, base_sha256:BASE?.base?.canonical_text_sha256 }; }
+let CATALOG=null, REG=null, current=null;
 
+async function loadCatalog(){
+  for(const p of ['registries/index.json','../registries/index.json']){
+    try{ const r=await fetch(p); if(r.ok){ CATALOG=await r.json(); break; } }catch(_){}
+  }
+  if(!CATALOG){ $('status').textContent='registry catalog unavailable'; return; }
+  const sel=$('registry'); sel.innerHTML='';
+  for(const r of CATALOG.registries){ const o=document.createElement('option');
+    o.value=r.id; o.textContent=`${r.title} (${r.kind})`; sel.appendChild(o); }
+  sel.onchange=onReg; onReg();
+}
+function onReg(){
+  REG=CATALOG.registries.find(r=>r.id===$('registry').value);
+  $('regnote').firstChild.textContent = REG.base ? `base: ${REG.base}` : 'no base — free artifact registry';
+  const endorse = REG.kind==='endorsement';
+  $('artifactForm').style.display = endorse?'none':'block';
+  $('endorseNote').style.display = endorse?'block':'none';
+  if(endorse) $('signLink').href = REG.id==='pie'?'sign-pie.html':'sign-pie.html';
+}
+$('source').onchange=()=>{ for(const k of ['text','file','hash']) $('src-'+k).style.display=($('source').value===k?'block':'none'); };
+
+async function digestFromSource(){
+  const s=$('source').value;
+  if(s==='text'){ const t=$('text').value; return {digest:await sha256Hex(t), bytes:new TextEncoder().encode(t).length}; }
+  if(s==='file'){ const f=$('file').files[0]; if(!f) throw new Error('choose a file');
+    const b=new Uint8Array(await f.arrayBuffer()); return {digest:await sha256HexBytes(b), bytes:b.length, autoname:f.name}; }
+  const h=$('hash').value.trim().toLowerCase(); if(!/^[0-9a-f]{64}$/.test(h)) throw new Error('need 64 hex chars'); return {digest:h};
+}
 function showResult(rec){
   current=rec; $('recJSON').textContent=JSON.stringify(rec,null,2); $('result').style.display='block';
-  const path=`registry/pie/inbox/tok-pie-${rec.statement_sha256.slice(0,12)}.json`;
-  $('ghBtn').onclick=()=>window.open(composeUrl({...CFG, path, content:JSON.stringify(rec,null,2)}),'_blank');
-  $('formBtn').onclick=()=>{ if(!CFG.googleFormUrl){alert('Set CFG.googleFormUrl to your published form.');return;}
-    window.open(CFG.googleFormUrl,'_blank'); };
+  const path=`registry/${rec.registry}/inbox/tok-${rec.registry}-${rec.subject.sha256.slice(0,12)}.json`;
+  $('ghBtn').onclick=()=>window.open(composeUrl({...CFG,path,content:JSON.stringify(rec,null,2)}),'_blank');
   $('dlBtn').onclick=()=>{ const b=new Blob([toJSONL(rec)+'\n'],{type:'application/x-ndjson'});
-    const u=URL.createObjectURL(b); const a=document.createElement('a'); a.href=u;
-    a.download=`tok-pie-${rec.statement_sha256.slice(0,12)}.jsonl`; a.click(); URL.revokeObjectURL(u); };
+    const u=URL.createObjectURL(b),a=document.createElement('a'); a.href=u;
+    a.download=`tok-${rec.registry}-${rec.subject.sha256.slice(0,12)}.jsonl`; a.click(); URL.revokeObjectURL(u); };
 }
-
-$('signBtn').onclick=async()=>{
-  if(!BASE){alert('Registry base not loaded.');return;}
-  const btn=$('signBtn'), st=$('status'); btn.disabled=true; st.className='status'; st.textContent='Hashing…';
+$('regBtn').onclick=async()=>{
+  const st=$('status'), btn=$('regBtn'); btn.disabled=true; st.className='status'; st.textContent='Hashing…';
   try{
-    if(!window.OpenTimestamps) throw new Error('no-ots-lib');
-    st.textContent='Timestamping via OpenTimestamps calendars…';
-    const rec=await buildRecord(fields());
-    st.className='status ok'; st.textContent='✓ Timestamped and AyeSHA-encoded.';
-    showResult(rec);
+    const {digest,bytes,autoname}=await digestFromSource();
+    const fields={registry:REG.id, name:$('name').value.trim()||autoname||'', kind:$('kind').value,
+                  digest, bytes, artifact_url:$('artifact_url').value.trim()};
+    if(!window.OpenTimestamps) throw new Error('no-ots');
+    st.textContent='Timestamping via OpenTimestamps…';
+    const rec=await buildArtifactRecord(fields);
+    st.className='status ok'; st.textContent='✓ Timestamped & AyeSHA-encoded.'; showResult(rec);
   }catch(e){
-    if(String(e.message).includes('no-ots-lib') || String(e).includes('OpenTimestamps')){
-      // fallback: manual stamping
-      const f=fields(), signed_utc=new Date().toISOString();
-      const statement=buildStatement({...f, signed_utc});
-      const sha=await sha256Hex(statement);
+    if(String(e.message).includes('no-ots')){
+      const {digest,bytes}=await digestFromSource().catch(()=>({digest:'',bytes:0}));
       $('manualCard').style.display='block';
-      $('manualHash').textContent=`statement (hash this file's exact contents):\n\n${statement}\n\nSHA-256: ${sha}`;
-      st.className='status warn'; st.textContent='Browser OTS unavailable — use the manual panel below.';
-      $('otsFile').onchange=async ev=>{
-        const buf=new Uint8Array(await ev.target.files[0].arrayBuffer());
+      $('manualHash').textContent='SHA-256: '+digest;
+      st.className='status warn'; st.textContent='Browser OTS unavailable — use the manual panel.';
+      $('otsFile').onchange=async ev=>{ const buf=new Uint8Array(await ev.target.files[0].arrayBuffer());
         const ots_ayesha=await Ayesha.encode(buf);
-        const rec={tok:'tok:pie:PENDING',registry:'pie',base_doi:f.base_doi,
-          signatory:f.signatory||'',affiliation:f.affiliation||'',capacity:f.capacity,
-          statement,statement_sha256:sha,ots_ayesha,signed_utc,model_of_record:'Claude Opus 4.8'};
-        if(f.artifact_url)rec.artifact_url=f.artifact_url; showResult(rec);
-      };
-    }else{ st.className='status warn'; st.textContent='Error: '+e.message; }
-  }finally{ btn.disabled=false; }
+        const rec={tok:`tok:${REG.id}:PENDING`,registry:REG.id,
+          subject:{sha256:digest,kind:$('kind').value,...(bytes?{bytes}:{}),...($('name').value.trim()?{name:$('name').value.trim()}:{})},
+          ots_ayesha,registered_utc:new Date().toISOString(),model_of_record:'Claude Opus 4.8'};
+        if($('artifact_url').value.trim()) rec.artifact_url=$('artifact_url').value.trim(); showResult(rec); };
+    } else { st.className='status warn'; st.textContent='Error: '+e.message; }
+  } finally { btn.disabled=false; }
 };
+loadCatalog();
 </script>
 </body></html>

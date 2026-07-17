@@ -1,0 +1,20 @@
+{
+  "registry_id": "pie",
+  "title": "Proclamation of Individual Equity — Signatory Registry",
+  "base": {
+    "artifact": "Proclamation of Individual Equity",
+    "version": "1.0",
+    "doi": "10.5281/zenodo.21397274",
+    "doi_url": "https://doi.org/10.5281/zenodo.21397274",
+    "canonical_text_sha256": "cea3276adf36927bb4afa4735efbd1117d1a78e1bb40f9404d7544b0fa7c16d6",
+    "note": "The canonical_text_sha256 anchors the immutable wording (independent of PNG/PDF packaging). Artifact-file hashes live in the PIE repo SHA256SUMS and the minted Zenodo record; reconcile against the Zenodo deposit before wide launch."
+  },
+  "append_only": true,
+  "public": true,
+  "version_controlled": true,
+  "signature_kind": "opentimestamps",
+  "encoding": "ayesha (see docs/ayesha.js — interface stable, codec swappable)",
+  "record_schema": "registry/pie/SCHEMA.json",
+  "records": "registry/pie/signatures.jsonl",
+  "model_of_record": "Claude Opus 4.8"
+}

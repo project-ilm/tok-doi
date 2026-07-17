@@ -78,21 +78,3 @@ export function composeUrl({owner, repo, branch, path, content}){
 }
 
 export function toJSONL(rec){ return JSON.stringify(rec); }
-
-// ── General atomic provenance (any registry, any artifact) ──────────────────
-export async function sha256HexBytes(bytes){ return hex(await crypto.subtle.digest('SHA-256', bytes)); }
-
-// Register an arbitrary artifact by its digest under any 'artifact' registry.
-export async function buildArtifactRecord({registry, name, kind, digest, bytes, artifact_url, note}){
-  const registered_utc = new Date().toISOString();
-  const otsBytes = await otsStampHash(digest);
-  const ots_ayesha = await Ayesha.encode(otsBytes);
-  const subject = { sha256: digest, kind: kind || 'artifact' };
-  if (name)  subject.name  = name;
-  if (bytes != null) subject.bytes = bytes;
-  const rec = { tok: `tok:${registry}:PENDING`, registry, subject, ots_ayesha,
-                registered_utc, model_of_record: 'Claude Opus 4.8' };
-  if (artifact_url) rec.artifact_url = artifact_url;
-  if (note) rec.note = note;
-  return rec;
-}

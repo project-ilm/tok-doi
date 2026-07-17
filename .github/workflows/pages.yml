@@ -1,0 +1,20 @@
+name: deploy-pages
+on: { push: { branches: ["main"], paths: ["docs/**","registries/**"] }, workflow_dispatch: {} }
+permissions: { contents: read, pages: write, id-token: write }
+concurrency: { group: "pages", cancel-in-progress: false }
+jobs:
+  deploy:
+    environment: { name: github-pages, url: "${{ steps.d.outputs.page_url }}" }
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - name: Assemble site (docs/ + registry base)
+        run: |
+          mkdir -p _site/registries
+          cp -r docs/* _site/
+          cp registries/pie.json _site/registries/
+      - uses: actions/upload-pages-artifact@v3
+        with: { path: "_site" }
+      - id: d
+        uses: actions/deploy-pages@v4

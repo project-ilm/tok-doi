@@ -1,0 +1,16 @@
+{
+  "registry_id": "general",
+  "title": "General atomic provenance registry",
+  "kind": "artifact",
+  "base": null,
+  "append_only": true,
+  "public": true,
+  "version_controlled": true,
+  "signature_kind": "opentimestamps",
+  "encoding": "ayesha (AYESHA1; interface stable, codec swappable)",
+  "record_schema": "registry/general/SCHEMA.json",
+  "records": "registry/general/records.jsonl",
+  "granularity": ["byte","char","token","word","sentence","message","chat","image","code","file","artifact"],
+  "note": "Registers cryptographic proof of any digital artifact at arbitrary granularity: SHA-256 -> OpenTimestamps -> AyeSHA -> record. Raw .ots is never stored.",
+  "model_of_record": "Claude Opus 4.8"
+}

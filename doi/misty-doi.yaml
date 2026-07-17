@@ -1,23 +1,26 @@
-# Misty run config — project-ilm/tok-doi mint. The file set is declared here so
-# mint is a single command with no manual file arguments.
+# Misty run config — project-ilm/tok-doi mint. Files declared here so mint is one command.
 metadata: metadata/misty.json
 files:
   - README.md
   - MANIFESTO.md
   - CONTRACT.md
   - CONTEXT.md
+  - CHANGELOG.md
   - docs/index.html
+  - docs/sign-pie.html
   - docs/verify.html
   - docs/tok.js
   - docs/ayesha.js
   - docs/style.css
+  - registries/index.json
+  - registries/general.json
   - registries/pie.json
+  - registry/general/SCHEMA.json
   - registry/pie/SCHEMA.json
+  - collections/SCHEMA.json
+  - collections/README.md
   - attest/PROTOCOL.md
-  - attest/parwana.sh
+  - attest/candor.sh
 target: production
-credentials:
-  token: env:ZENODO_TOKEN
-  token_path_fallback: ops/.zenodo_token
-  orcid: "0009-0002-0684-8320"
+credentials: { token: env:ZENODO_TOKEN, token_path_fallback: ops/.zenodo_token, orcid: "0009-0002-0684-8320" }
 options: { publish: false }

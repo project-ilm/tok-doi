@@ -1,0 +1,32 @@
+{
+  "protocol": "parwana/v1",
+  "statement": {
+    "_type": "https://in-toto.io/Statement/v1",
+    "predicate": {
+      "action": "mint",
+      "actor": "Abhishek Choudhary (AyeAI, ORCID 0009-0002-0684-8320)",
+      "authorized_utc": "2026-07-16T23:38:36Z",
+      "confirmation": {
+        "prefix_len": 8,
+        "provided": "e4a6b94b",
+        "scheme": "short-sha"
+      },
+      "model_of_record": "Claude Opus 4.8",
+      "reason": "Initial DoI",
+      "target": "Zenodo",
+      "tool_of_record": "misty-doi"
+    },
+    "predicateType": "https://project-ilm.org/attestations/parwana/v1",
+    "subject": [
+      {
+        "digest": {
+          "sha256": "e4a6b94b8439b07857f41d4f3c18a0f73624f01e4864ff2f1921fdb24e0b8450"
+        },
+        "name": "Tok DOI \u2014 atomic provenance layer"
+      }
+    ]
+  },
+  "statement_sha256": "55fbd15b00c1834a7b2e9de383d2d7b9113be2d2d433644dab4fc925218e07fb",
+  "ots_ayesha": "AYESHA1.AE9wZW5UaW1lc3RhbXBzAABQcm9vZgC_ieLohOiSlAEIVfvRWwDBg0p7Lp3jg9LXuRE74tLUM2RNq0_JJSGOB_vwELOtyLyqmWRnUBSuWslWB2YI__AQAJeKvlMKppp3HBQLBdbLOgjxIPZpeSLkBeFaKUh47pgH8-DemFJVuXtg8wLerlyxWr2VCPAgNijaSD3nPzvT3QdbnbFlcDYI2XivqIsghCNt2ENH650I8QRqWWt_8AjQ7n2QdRp4xQCD3-MNLvkMjikoaHR0cHM6Ly9maW5uZXkuY2FsZW5kYXIuZXRlcm5pdHl3YWxsLmNvbf_wCERuoQox4tMBCPAQVxtQWmzKfpUUt2rQYZg-jwjxIBQHhSEUU5NbPYecLgpepOA-V5t_-t8Kq4W61Jc6pxzkCPEgQcRlHdF5UNNiDzVLfQCLweEwnJNpfUJHmhv8RDmm6lMI8QRqWWuA8AhRmqAewDyDxQCD3-MNLvkMji4taHR0cHM6Ly9hbGljZS5idGMuY2FsZW5kYXIub3BlbnRpbWVzdGFtcHMub3Jn__AIi-gfoODkKmoI8BBGuNvrXn3vZXK4M-tU1WjLCPEg8AeR3HPK82Itcxf4yKcfjpccEYHZXQiUbEe3u1F6SNkI8QRqWWt_8AhKKXFyNrOJOQCD3-MNLvkMjiwraHR0cHM6Ly9ib2IuYnRjLmNhbGVuZGFyLm9wZW50aW1lc3RhbXBzLm9yZ_AQw_wqamhQymtOYVnG2j_JPwjxBGpZa3_wCNcZC-7IpdssAIPf4w0u-QyOIyJodHRwczovL2J0Yy5jYWxlbmRhci5jYXRhbGxheHkuY29t.93208e03",
+  "receipt_utc": "2026-07-16T23:38:36Z"
+}

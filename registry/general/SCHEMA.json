@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project-ilm.github.io/tok-doi/registry/general/SCHEMA.json",
+  "title": "Tok DOI record — general atomic provenance",
+  "type": "object",
+  "required": ["tok", "registry", "subject", "ots_ayesha", "registered_utc"],
+  "additionalProperties": false,
+  "properties": {
+    "tok":       {"type": "string", "description": "tok:general:NNNN"},
+    "registry":  {"const": "general"},
+    "subject": {
+      "type": "object",
+      "required": ["sha256", "kind"],
+      "additionalProperties": false,
+      "properties": {
+        "name":   {"type": "string", "description": "human label for the artifact"},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "kind":   {"type": "string", "enum": ["byte","char","token","word","sentence","message","chat","image","code","file","artifact"]},
+        "bytes":  {"type": "integer", "description": "optional size in bytes"}
+      }
+    },
+    "artifact_url":     {"type": "string", "description": "optional pointer to where the artifact is stored (not the OTS)"},
+    "note":             {"type": "string"},
+    "ots_ayesha":       {"type": "string", "description": "AyeSHA-encoded OpenTimestamps proof of subject.sha256"},
+    "registered_utc":   {"type": "string", "format": "date-time"},
+    "model_of_record":  {"type": "string"}
+  }
+}

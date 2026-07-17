@@ -4,7 +4,7 @@
 #
 # mint.sh — mint this repo's Zenodo DOI with ONE command. No file arguments, no
 # path juggling. Files + metadata come from doi/misty-doi.yaml. You authorize with
-# a git-style short digest + reason (Parwana v1); the intent is OTS-attested; then
+# a git-style short digest + reason (Candor v1); the intent is OTS-attested; then
 # misty mints. Nothing is minted without your --confirm.
 #
 #   ./attest/mint.sh                          # preview: prints the digest to confirm
@@ -35,13 +35,22 @@ PY
 MAP="$(read_meta)"; META="$(echo "$MAP"|head -1)"; FILES="$(echo "$MAP"|tail -n +2)"
 TITLE="$(python3 -c "import json;print(json.load(open('$META')).get('title','(untitled)'))")"
 
+# integrity gate: deposit files must match the committed manifest before we mint
+if [ -f doi/DEPOSIT.sha256 ]; then
+  if ! sha256sum -c doi/DEPOSIT.sha256 >/dev/null 2>&1; then
+    echo "✗ integrity: deposit files do not match doi/DEPOSIT.sha256 — refusing to mint." >&2
+    sha256sum -c doi/DEPOSIT.sha256 || true; exit 4
+  fi
+  echo "✓ integrity: deposit files match doi/DEPOSIT.sha256"
+fi
+
 # subject digest = SHA-256 over the sorted manifest of (filesha  name) — identifies the exact deposit
 MANIFEST="$(for f in $FILES; do printf '%s  %s\n' "$(sha256sum "$f"|cut -d' ' -f1)" "$f"; done | sort)"
 DIGEST="$(printf '%s\n' "$MANIFEST" | sha256sum | cut -d' ' -f1)"
 
 if [ -z "$CONFIRM" ]; then
   echo "MINT preview — $TITLE"; echo "  files:"; echo "$FILES" | sed 's/^/    /'
-  bash "$HERE/parwana.sh" --subject "$TITLE" --digest "$DIGEST" --action mint \
+  bash "$HERE/candor.sh" --subject "$TITLE" --digest "$DIGEST" --action mint \
     --target "Zenodo (misty publish)" || true
   exit 0
 fi
@@ -50,7 +59,7 @@ fi
 ARGS=(--subject "$TITLE" --digest "$DIGEST" --action mint --target "Zenodo" \
       --reason "$REASON" --confirm "$CONFIRM")
 [ "$REHEARSE" = 1 ] && ARGS+=(--dry-run)
-bash "$HERE/parwana.sh" "${ARGS[@]}"
+bash "$HERE/candor.sh" "${ARGS[@]}"
 
 # token via the established method (env, or central ops path) — never inlined
 if [ -z "${ZENODO_TOKEN:-}" ]; then

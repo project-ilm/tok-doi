@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project-ilm.github.io/tok-doi/registry/pie/SCHEMA.json",
+  "title": "PIE Signatory Record (Tok DOI, atomic)",
+  "type": "object",
+  "required": ["tok", "registry", "base_doi", "statement_sha256", "ots_ayesha", "signed_utc"],
+  "additionalProperties": false,
+  "properties": {
+    "tok":            {"type": "string", "description": "Tok DOI record id, e.g. tok:pie:0001"},
+    "registry":       {"const": "pie"},
+    "base_doi":       {"type": "string", "description": "DOI of the canonical Proclamation being endorsed"},
+    "signatory":      {"type": "string", "description": "Name or handle. Pseudonyms permitted. May be empty for anonymous."},
+    "affiliation":    {"type": "string", "description": "Optional. Individuals and institutions alike."},
+    "capacity":       {"type": "string", "enum": ["individual", "institution"], "default": "individual"},
+    "statement":      {"type": "string", "description": "The endorsement statement that was hashed (verbatim)."},
+    "statement_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "ots_ayesha":     {"type": "string", "description": "AyeSHA-encoded OpenTimestamps proof of statement_sha256. Raw .ots is NOT stored."},
+    "artifact_url":   {"type": "string", "description": "Optional pointer to where the signatory stored their own copy. Not the OTS."},
+    "signed_utc":     {"type": "string", "format": "date-time"},
+    "model_of_record":{"type": "string"}
+  }
+}

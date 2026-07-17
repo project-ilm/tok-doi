@@ -1,55 +1,63 @@
-# Tok DOI — <span title="No Added Sugar.">atomic provenance</span>
+# Tok DOI — atomic provenance layer
 
-> **Tok DOI** registers *cryptographic proof*, not scholarly publications. Every
-> artifact — a byte, a token, a sentence, a chat, a signature — reduces to
-> **SHA-256 → OpenTimestamps → AyeSHA → registry**. Sibling to **Misty DOI** (the
-> rich publication layer, "Mishti Doi"). Signature: **«No Added Sugar.»**
+> Register **cryptographic proof**, not publications. Any digital artifact — a
+> byte, character, token, word, sentence, message, chat, image, code fragment, or
+> file — reduces to **SHA-256 → OpenTimestamps → AyeSHA → registry → Tok DOI record**.
+> Sibling to **Misty DOI** (the rich publication layer, "Mishti Doi").
+> Signature: **«No Added Sugar.»**
 
-This repository is the **seed** of Tok DOI, sized for one job: the **signatory
-campaign for the Proclamation of Individual Equity** (PIE, DOI
-[10.5281/zenodo.21397274](https://doi.org/10.5281/zenodo.21397274)). The full Tok DOI system — arbitrary
-granularity, multiple registries, Misty integration, sub-DOI publication — is
-deliberately **deferred**; see [`CONTRACT.md`](CONTRACT.md).
+Tok DOI is **not** another DOI minting system. It is an atomic provenance and
+registration layer that works at arbitrary granularity. It is **browser-first with
+no backend**: GitHub Pages + public OpenTimestamps infrastructure is sufficient.
+The raw `.ots` proof is never stored — only its AyeSHA encoding.
 
-## Not an anti-institution campaign
+## Register (browser-first, keyless)
+Open **`docs/index.html`** → pick a **registry** → provide the artifact (paste
+text, upload a file, or paste a SHA-256) → it hashes, timestamps via OpenTimestamps,
+AyeSHA-encodes, and returns a record you submit yourself (a pre-filled GitHub
+commit into `registry/<id>/inbox/`, or a Google Form → Sheet → periodic commit).
+The maintainer folds pending records into the append-only registry with
+[`scripts/ingest.sh`](scripts/ingest.sh). Verify any record in
+[`docs/verify.html`](docs/verify.html).
 
-Signing is an act of **preservation of identity and individuality in the AGI era**
-— a decentralised, verifiable timestamp beside the canonical Proclamation. It
-opposes no institution, harvests no data, and permits anonymity. Institutions are
-welcome to sign as institutions. Full intent: [`MANIFESTO.md`](MANIFESTO.md).
+## Registries (retrieved, not generated)
+Catalog: [`registries/index.json`](registries/index.json). Two kinds ship:
+- **`general`** — artifact registry: proof of any artifact at any granularity.
+- **`pie`** — endorsement registry: signed endorsements of the Proclamation of
+  Individual Equity (DOI 10.5281/zenodo.21397274). Dedicated page:
+  [`docs/sign-pie.html`](docs/sign-pie.html).
 
-## How signing works (browser-first, no backend)
+Add a registry by committing `registries/<id>.json` + a `registry/<id>/` folder
+(see [`registries/README.md`](registries/README.md)).
 
-1. A signatory opens **`docs/index.html`** (GitHub Pages).
-2. Their endorsement statement is hashed (SHA-256, Web Crypto).
-3. The hash is timestamped via **OpenTimestamps** public calendars, in-browser.
-4. The `.ots` proof is **AyeSHA-encoded** — the raw `.ots` is never stored.
-5. They submit **keyless-ly**: a pre-filled GitHub compose-URL writes one record to
-   `registry/pie/inbox/`, or a Google Form feeds a Sheet the maintainer commits.
-6. The maintainer folds pending records into the **append-only** registry with
-   [`scripts/ingest.sh`](scripts/ingest.sh) (dry-run by default). The human commits.
+## Sub-DOIs → collections → Misty → Zenodo
+Each record is an atomic **sub-DOI**. Curate many into a **collection**
+([`collections/`](collections/README.md)) and publish the set as one Zenodo DOI via
+Misty. Tok DOI is the atomic layer; Misty is the publication layer.
 
-Verify any record in **`docs/verify.html`** or with `scripts/verify.sh`.
-
-## Layout
-
-```
-docs/           Signing + verify pages (GitHub Pages); tok.js, ayesha.js
-registries/     Pre-existing registry bases — pie.json (retrieved, not generated)
-registry/pie/   SCHEMA.json · signatures.jsonl (append-only) · inbox/ (pending)
-scripts/        verify.sh · ingest.sh (dry-run default)
-MANIFESTO.md    Intent + disclaimers
-```
+## Authorization — Candor
+Irreversible actions (mint, push) are authorized with **one command** + a
+git-style short digest + a reason; the intent is OpenTimestamps-attested
+(in-toto Statement v1). See [`attest/PROTOCOL.md`](attest/PROTOCOL.md). No donkey work.
 
 ## AyeSHA (read before shipping)
-
 `docs/ayesha.js` ships a **reversible placeholder codec** (base64url + checksum),
-not the canonical AyeSHA. The interface (`encode/decode`) is stable; swap the codec
-and nothing else changes. Do not treat the placeholder as final.
+not the canonical AyeSHA. The `encode/decode` interface is stable; swap the codec
+and nothing else changes.
+
+## Layout
+```
+docs/         index.html (registrar) · sign-pie.html · verify.html · tok.js · ayesha.js
+registries/   index.json + per-registry definitions (general, pie)
+registry/     general/ · pie/  — SCHEMA + append-only records + inbox/
+collections/  curate sub-DOIs for Misty publication
+attest/       Candor authorization (candor.sh, mint.sh, push.sh, PROTOCOL.md)
+scripts/      ingest.sh · collect.sh · verify.sh · record-doi.sh
+doi/          mint config (misty-doi.yaml, DEPOSIT.sha256)
+```
 
 ## Licensing
-
 Per-category (estate standard): software GPL-3.0-or-later; content CC-BY-SA-4.0;
-registry & metadata CC0-1.0. See [`LICENSE`](LICENSE).
+registries & records CC0-1.0. See [`LICENSE`](LICENSE).
 
 © 1993–2026 Abhishek Choudhary. All rights reserved. · AyeAI · ORCID 0009-0002-0684-8320 · model: Claude Opus 4.8

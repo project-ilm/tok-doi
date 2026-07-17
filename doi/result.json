@@ -1,0 +1,78 @@
+{
+  "tool": "misty-doi",
+  "state": "published",
+  "doi": "10.5281/zenodo.21402745",
+  "concept_doi": "10.5281/zenodo.21402744",
+  "record_url": "https://zenodo.org/record/21402745",
+  "deposition_id": 21402745,
+  "bucket": "https://zenodo.org/api/files/44912066-596d-4259-8e1d-063dfec3ba24",
+  "sandbox": false,
+  "files": [
+    {
+      "name": "README.md",
+      "size": 2772,
+      "sha256": "c37f5271623799943a4e4026c4bd9a5cc41b60ff5243cbba325a3d78b72a9365"
+    },
+    {
+      "name": "MANIFESTO.md",
+      "size": 2913,
+      "sha256": "45829832d26fb5e736c095feefb6b117c30482b29708d3bef2d806f12591eacc"
+    },
+    {
+      "name": "CONTRACT.md",
+      "size": 1945,
+      "sha256": "7861e60566074d9e576cc8acc9d0266600b2fad27705922b66e7eb49dc8718dc"
+    },
+    {
+      "name": "CONTEXT.md",
+      "size": 1402,
+      "sha256": "0a81de6b09b42dde56d9a492fa5c01adb9f425ffd33ff860301f1e334ded87ad"
+    },
+    {
+      "name": "index.html",
+      "size": 7286,
+      "sha256": "8e0cf772a7fd7c51ca7ec662032c0477d77cb5498fe3a3b52325e277d0868593"
+    },
+    {
+      "name": "verify.html",
+      "size": 2610,
+      "sha256": "9da57aadcf877398bbfae1ef16d116cf5e2fbe5ce77d84557a9b39c58674a26c"
+    },
+    {
+      "name": "tok.js",
+      "size": 3453,
+      "sha256": "f9f556da6fe043102a9b67fc88b5c9f25da0e33ccadaac3b2857f6deaae4e691"
+    },
+    {
+      "name": "ayesha.js",
+      "size": 2236,
+      "sha256": "6d97e0aa76099435d29198c32abf5bc1b56f607d39ef94df38816c51db04ff42"
+    },
+    {
+      "name": "style.css",
+      "size": 1995,
+      "sha256": "2b196a8b3387f1f15924af339f7160eb2ced6ee5cbd0231758af98af43c58b43"
+    },
+    {
+      "name": "pie.json",
+      "size": 954,
+      "sha256": "8e0581dd5a5439164362fb8aac37e38fe147844613085d534fe7fd87224a9421"
+    },
+    {
+      "name": "SCHEMA.json",
+      "size": 1517,
+      "sha256": "8e47a80d56b548ea9f8e014be9f61029baf9444c802859edd185f1227279d22a"
+    },
+    {
+      "name": "PROTOCOL.md",
+      "size": 2930,
+      "sha256": "48fc67ab31efd923a261ce43508633196da6f97b1a4dc3af2269228f414ddd35"
+    },
+    {
+      "name": "parwana.sh",
+      "size": 4900,
+      "sha256": "148175476aa428428fd327cb4458d13022cb356e77d781c4dc44b6734a9b38eb"
+    }
+  ],
+  "generated_at": "2026-07-16T23:38:57+00:00"
+}

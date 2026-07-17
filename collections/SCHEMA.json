@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Tok DOI collection (curated set of sub-DOIs for Misty publication)",
+  "type": "object",
+  "required": ["collection_id", "title", "toks", "created_utc"],
+  "properties": {
+    "collection_id": {"type": "string"},
+    "title":         {"type": "string"},
+    "description":   {"type": "string"},
+    "toks":          {"type": "array", "items": {"type": "string"}, "description": "tok:<registry>:NNNN ids included"},
+    "registries":    {"type": "array", "items": {"type": "string"}},
+    "intended_publication": {"const": "misty-doi -> zenodo"},
+    "created_utc":   {"type": "string", "format": "date-time"},
+    "model_of_record": {"type": "string"}
+  }
+}

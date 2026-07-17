@@ -1,7 +1,7 @@
-# Candor v1 — attested authorization for irreversible actions
+# Parwana v1 — attested authorization for irreversible actions
 
-**Candor** — frank, verifiable intent. The standing contract is *no donkey work
-for humans*. A human authorizes an irreversible action (mint, push) by issuing **one
+**پروانہ · "permit / warrant"** — the standing contract is *no donkey work for
+humans*. A human authorizes an irreversible action (mint, push) by issuing **one
 command** with a **git-style short digest** of the subject and a **reason**. That
 intent is bound to the subject, timestamped, and notarised — so the *authorization
 itself* is provable, not just the artifact.
@@ -17,7 +17,7 @@ predicate profile:
 - **Confirmation:** git-style short digest. The human types enough leading hex of
   the subject digest to identify it uniquely (≥6), exactly as `git` accepts short
   commit ids. Typing it *is* the signature of intent.
-- **New:** the `candor/v1` predicate profile below, and the rule that the raw
+- **New:** the `parwana/v1` predicate profile below, and the rule that the raw
   `.ots` is never stored — only its AyeSHA (AYESHA1) encoding.
 
 ## The attested statement
@@ -25,7 +25,7 @@ predicate profile:
 {
   "_type": "https://in-toto.io/Statement/v1",
   "subject": [{"name": "<what>", "digest": {"sha256": "<D>"}}],
-  "predicateType": "https://project-ilm.org/attestations/candor/v1",
+  "predicateType": "https://project-ilm.org/attestations/parwana/v1",
   "predicate": {
     "action": "mint | push",
     "target": "<Zenodo | remote ref>",

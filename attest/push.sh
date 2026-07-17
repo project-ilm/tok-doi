@@ -13,11 +13,11 @@ while [ $# -gt 0 ]; do case "$1" in
   *) if [ "$REMOTE" = origin ] && [ "$1" != HEAD ]; then REMOTE="$1"; else REF="$1"; fi;; esac; shift; done
 COMMIT="$(git rev-parse HEAD)"
 if [ -z "$CONFIRM" ]; then
-  bash attest/parwana.sh --subject "git commit" --digest "$COMMIT" --action push \
+  bash attest/candor.sh --subject "git commit" --digest "$COMMIT" --action push \
     --target "$REMOTE $REF" || true
   exit 0
 fi
-bash attest/parwana.sh --subject "git commit" --digest "$COMMIT" --action push \
+bash attest/candor.sh --subject "git commit" --digest "$COMMIT" --action push \
   --target "$REMOTE $REF" --reason "$REASON" --confirm "$CONFIRM"
 echo "→ git push $REMOTE $REF"
 git push "$REMOTE" "$REF"

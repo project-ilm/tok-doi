@@ -26,7 +26,7 @@
   ],
   "notes": "Seed release for the PIE signatory campaign. Independent of Misty DOI. AyeSHA codec is a documented placeholder behind a stable interface. Model of record: Claude Opus 4.8.",
   "repository": "https://github.com/project-ilm/tok-doi",
-  "doi": "10.5281/zenodo.21402745",
+  "doi": null,
   "related_identifiers": [
     {
       "relation": "references",
