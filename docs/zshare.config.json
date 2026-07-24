@@ -1,0 +1,14 @@
+{
+  "_copyright": "© 1993–2026 Abhishek Choudhary. All rights reserved.",
+  "title": "Tok DOI — atomic provenance registrar",
+  "short": "Tok DOI",
+  "text": "Tok DOI — atomic provenance registrar",
+  "bg": "#fbf6e9",
+  "fg": "#9a6a12",
+  "hashKey": "s",
+  "sw": "sw.js",
+  "whatsapp": true,
+  "card": true,
+  "stamp": true,
+  "installHint": true
+}

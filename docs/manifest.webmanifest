@@ -1,0 +1,44 @@
+{
+  "name": "Tok DOI — atomic provenance registrar",
+  "short_name": "Tok DOI",
+  "description": "Tok DOI — atomic provenance registrar",
+  "id": "/tok-doi/",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#fbf6e9",
+  "theme_color": "#fbf6e9",
+  "categories": [
+    "productivity",
+    "utilities"
+  ],
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Sign the Proclamation",
+      "short_name": "Sign",
+      "url": "./sign-pie.html",
+      "description": "Add a timestamped signature to the Proclamation of Individual Equity"
+    }
+  ]
+}
