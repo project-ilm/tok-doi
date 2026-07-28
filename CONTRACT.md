@@ -29,3 +29,24 @@ this repository.
 
 <!-- BEGIN repo-specific (preserved across sync) -->
 <!-- END repo-specific (preserved across sync) -->
+
+## MASI in the browser (added 28 Jul 2026)
+
+**T-MASI-1 — one definition, two runtimes.** `docs/masi.js` and `misty/masi.py` carry
+the same seven tracks and the same five gates. Neither is a summary of the other. A
+change to one is a change to both, and the seed script fails if they drift.
+
+**T-MASI-2 — no tokens, ever.** Misty needs a Zenodo token; Tok needs nothing. Anything
+added here that requires an account or a key belongs in Misty instead. «No Added Sugar.»
+
+**T-MASI-3 — the ledger body is never submitted.** A registry record carries the digest
+and the proof. What the researcher was working on stays on their device.
+
+**T-MASI-4 — AI is asked, never obeyed.** Every assistant seed states that the human is
+responsible for the scholarly and legal decisions. The provider is the reader's choice
+(AAB AI-source invariance); providers with no documented URL parameter get the prompt on
+the clipboard rather than an invented one.
+
+**T-MASI-5 — the gates protect what cannot be repaired.** Ethics approval cannot be
+applied backwards. A pre-registration is only worth its date. A DOI is a dated public
+disclosure and can end a patent's novelty. These are refusals, not warnings.

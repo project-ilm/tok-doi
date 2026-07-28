@@ -2,8 +2,27 @@
   "catalog": "tok-doi registries",
   "note": "Registries are pre-defined and retrieved, never generated dynamically. Add one by committing a definition here and a registries/<id>.json.",
   "registries": [
-    {"id": "general", "title": "General atomic provenance", "kind": "artifact",   "base": null,                      "def": "registries/general.json"},
-    {"id": "pie",     "title": "PIE Signatory Registry",     "kind": "endorsement", "base": "10.5281/zenodo.21397274", "def": "registries/pie.json"}
+    {
+      "id": "general",
+      "title": "General atomic provenance",
+      "kind": "artifact",
+      "base": null,
+      "def": "registries/general.json"
+    },
+    {
+      "id": "pie",
+      "title": "PIE Signatory Registry",
+      "kind": "endorsement",
+      "base": "10.5281/zenodo.21397274",
+      "def": "registries/pie.json"
+    },
+    {
+      "id": "masi",
+      "title": "MASI workflow ledgers",
+      "kind": "workflow",
+      "base": null,
+      "def": "registries/masi.json"
+    }
   ],
   "model_of_record": "Claude Opus 4.8"
 }

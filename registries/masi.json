@@ -1,0 +1,16 @@
+{
+  "id": "masi",
+  "title": "MASI workflow ledgers",
+  "kind": "workflow",
+  "what": "A stamped MASI ledger: the workflow a scholarly artifact actually travelled, with the dates that make it defensible.",
+  "record_fields": [
+    "registry",
+    "slug",
+    "track",
+    "state",
+    "sha256",
+    "proof",
+    "submitted_utc"
+  ],
+  "note": "The ledger body is never submitted — only its digest and proof. What you were working on stays yours."
+}

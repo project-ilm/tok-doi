@@ -21,3 +21,17 @@ See the master map at `zistgah/governance/CONTEXT.md`. This repo:
 
 <!-- BEGIN repo-specific (preserved across sync) -->
 <!-- END repo-specific (preserved across sync) -->
+
+## MASI surface (28 Jul 2026)
+
+`docs/masi.html` + `docs/masi.js` — seven-track scholarly workflow, entirely client-side.
+Workspace in localStorage, exportable as JSON. Ledger digests stamped via OpenTimestamps
+from the browser; records submitted keylessly through `composeUrl` into
+`registry/masi/inbox/`, folded in by `scripts/ingest.sh` like every other registry.
+
+Tracks: ethics · prereg · paper · journal · conference · chapter · patent.
+Gates: G1 ethics-before-collection · G2 stamp-before-collection · G3 file-before-publish
+· G4 no-accept-without-review · G5 prereg advisory.
+
+The same definitions live in `misty/masi.py` (project-ilm/misty-doi, from 1.1.2+). Misty
+mints; Tok proves. A researcher with no account uses Tok and loses nothing but the DOI.
