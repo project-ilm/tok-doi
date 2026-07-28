@@ -1,0 +1,18 @@
+{
+    "_type": "https://in-toto.io/Statement/v1",
+    "predicateType": "https://project-ilm.org/attestations/candor/v1",
+    "subject": [
+        {
+            "name": "project-ilm/tok-doi",
+            "digest": {
+                "gitCommit": "aac8b2a263c4ec2b0970d8c8473de4992962eee6"
+            }
+        }
+    ],
+    "predicate": {
+        "action": "PUSH",
+        "reason": "update",
+        "utc": "20260728T002944Z",
+        "host": "ilm01-lin"
+    }
+}
